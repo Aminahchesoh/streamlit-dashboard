@@ -5,9 +5,17 @@ from datetime import datetime, timedelta
 import plotly.express as px
 
 # Load pre-trained KNN model and preprocessing pipeline
-knn_model = joblib.load('trained_knn_model.pkl')
-encoder = joblib.load('target_encoder.pkl')
+# Check if the model files exist before loading
+if not os.path.exists("trained_knn_model.pkl"):
+    st.error("Model file 'trained_knn_model.pkl' not found. Please ensure it is uploaded.")
+else:
+    knn_model = joblib.load('trained_knn_model.pkl')
 
+if not os.path.exists("target_encoder.pkl"):
+    st.error("Encoder file 'target_encoder.pkl' not found. Please ensure it is uploaded.")
+else:
+    encoder = joblib.load('target_encoder.pkl')
+    
 # Load data
 data = pd.read_csv("C:/Users/User/Desktop/utem_pj/Train.csv")
 data['BizDate'] = pd.to_datetime(data['BizDate'])  # Ensure BizDate is in datetime format
